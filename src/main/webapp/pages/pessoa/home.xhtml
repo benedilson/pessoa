@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Home - Listagem de Pessoas e Endereços</title>
+</h:head>
+
+<h:body>
+    <h:form id="listaPessoasForm">
+
+        <p:dataTable var="pessoa" value="#{pessoaManagedBean.pessoas}" widgetVar="pessoaTable"
+                     emptyMessage="Nenhuma pessoa encontrada" id="pessoasTable" styleClass="p-datatable-gridlines">
+
+            <p:column headerText="Nome">
+                #{pessoa.nome}
+            </p:column>
+
+            <p:column headerText="Idade">
+                #{pessoa.idade}
+            </p:column>
+
+            <p:column headerText="Sexo">
+                #{pessoa.sexo}
+            </p:column>
+
+            <!-- Adicionando detalhes do endereço principal -->
+            <p:column headerText="Logradouro">
+                #{pessoa.enderecoPrincipal.logradouro}
+            </p:column>
+
+            <p:column headerText="Número">
+                #{pessoa.enderecoPrincipal.numero}
+            </p:column>
+
+            <p:column headerText="Bairro">
+                #{pessoa.enderecoPrincipal.bairro}
+            </p:column>
+
+            <p:column headerText="Cidade">
+                #{pessoa.enderecoPrincipal.cidade}
+            </p:column>
+
+            <p:column headerText="Estado">
+                #{pessoa.enderecoPrincipal.estado}
+            </p:column>
+
+            <!-- Coluna para ações de edição e exclusão -->
+            <p:column style="width:100px;text-align:center">
+                <p:commandButton value="Editar" action="#{pessoaManagedBean.editar(pessoa)}" icon="pi pi-pencil" />
+                <p:commandButton update=":listaPessoasForm:pessoasTable" icon="pi pi-trash"
+                                 title="Deletar" actionListener="#{pessoaManagedBean.deletar(pessoa)}"
+                                 ajax="true" onclick="if(!confirm('Confirma a exclusão?')) return false;"/>
+            </p:column>
+        </p:dataTable>
+
+        <!-- Botão para cadastro de novas pessoas -->
+        <p:commandButton value="Cadastrar Novo" action="cadastro.xhtml?faces-redirect=true" icon="pi pi-plus"/>
+
+    </h:form>
+
+</h:body>
+</html>
